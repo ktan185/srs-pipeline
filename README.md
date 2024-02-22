@@ -6,6 +6,7 @@ UOA Summer Research Scholarship 2024.
 ## How to run
 
 Ensure that the correct Java version is set, This line can be executed in CLI:
+
 export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 
 apiproxy.config file containing OpenAI api email & key should be placed in the Implementatation folder.
@@ -23,7 +24,7 @@ The following files need to be updated before running: (Potientally fix these is
 
 ## Notes
 
-OASIs tool created by Gunel Jahangirova is included in this repository
+OASIs tool created by Gunel Jahangirova is included in this repository, find the original [repository](https://github.com/guneljahan/OASIs) here.
 
 ## Related Publications
 
