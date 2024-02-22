@@ -1,0 +1,56 @@
+Fix the assertion in the code to have no false positives or negatives. 
+I will label the first two. Output the corrected code. Do not provide an explanation.
+1  public int getMin(int a, int b) {
+2	  int min;
+3		if (a <= b) {
+4			min = a;
+5		} else {
+6			min = b;
+7		}
+8		assert (min < a);  // False Positive
+9		return min;
+10 }
+
+The assertion has a false positive, 
+here is a test case which leads to a false positive:
+  @Test(timeout = 4000)
+  public void test0()  throws Throwable  {
+    SimpleMethods simpleMethods0 = new SimpleMethods();
+    int int0 = simpleMethods0.getMin(1, 276);
+  }
+A corrected assertion would be:
+assert ((min == a) || (min == b)) && ((min <= a) && (min <= b));
+
+1  public int getMax(int x, int y) {
+2		int max;
+3		if (x >= y) {
+4			max = x;
+5		} else {
+6			max = y;
+7		}
+8		assert (max >= x); // False Negative
+9		return max;
+10 }
+
+The assertion has a false negative, 
+if we change bytecode at line 3 with InsertUnaryOp IINC 1, we obtain an incorrect program state, the value of:
+max changes from 2582 to 2583
+x changes from 2582 to 2583
+the assertion passes but should fail.
+A corrected assertion would be:
+assert ((max == x) || (max == y)) && ((max >= x) && (max >= y));
+
+2  public static int copySignInt(int magnitude, int sign) throws Exception {
+3    int result;
+4    if ((magnitude >= 0 && sign >= 0) || (magnitude < 0 && sign < 0)) { // Sign is OK.
+5      result = magnitude;
+6    } else if (sign >= 0 && magnitude == Integer.MIN_VALUE) {
+7      throw new Exception();
+8    } else {
+9      result = -magnitude; // Flip sign.
+10    }
+11    assert (true); // False Negative
+12    return result;
+13  }
+
+Output the corrected assertion. Do not provide an explanation.
